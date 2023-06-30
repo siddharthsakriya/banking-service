@@ -1,26 +1,27 @@
 package com.bank.controller;
 
 import com.bank.model.Customer;
+import com.bank.service.CustomerService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDate;
-import java.time.Month;
 import java.util.List;
 
 @RestController
+@RequestMapping("api/v1/customer")
 public class CustomerController {
-    @RequestMapping("api/v1/customer")
+
+    private final CustomerService customerService;
+
+    @Autowired
+    public CustomerController(CustomerService customerService) {
+        this.customerService = customerService;
+    }
+
+    @GetMapping
     public List<Customer> getCustomers(){
-        return List.of(
-            new Customer(
-                    1,
-                    "John Doe",
-                    "John Doe",
-                    "25 Glove Street",
-                    "1299292",
-                    LocalDate.of(2003, Month.APRIL, 9 )
-            )
-        );
+        return customerService.getCustomers();
     }
 }
