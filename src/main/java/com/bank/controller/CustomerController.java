@@ -12,13 +12,8 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/customer")
 public class CustomerController {
-
-    private final CustomerService customerService;
-
     @Autowired
-    public CustomerController(CustomerService customerService) {
-        this.customerService = customerService;
-    }
+    CustomerService customerService;
 
     @GetMapping
     public List<Customer> getCustomers(){

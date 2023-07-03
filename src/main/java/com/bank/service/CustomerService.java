@@ -1,6 +1,9 @@
 package com.bank.service;
 
+import com.bank.converter.CustomerConverter;
+import com.bank.db.repository.CustomerRepository;
 import com.bank.model.Customer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -9,16 +12,10 @@ import java.util.List;
 
 @Service
 public class CustomerService {
+    @Autowired
+    CustomerRepository customerRepository;
+
     public List<Customer> getCustomers(){
-        return List.of(
-                new Customer(
-                        1,
-                        "John Doe",
-                        "John Doe",
-                        "25 Glove Street",
-                        "1299292",
-                        LocalDate.of(2003, Month.APRIL, 9 )
-                )
-        );
+        return CustomerConverter.convertToModel(customerRepository.findAll());
     }
 }
