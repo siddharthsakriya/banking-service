@@ -12,9 +12,7 @@ import java.util.List;
 public class AccountService {
     @Autowired
     AccountRepository accountRepository;
-
     public List<Account> getAccounts(){
         return AccountConverter.convertToModel(accountRepository.findAll());
-
     }
 }

@@ -18,7 +18,6 @@ public class AccountConverter {
         com.bank.model.Account modelAccounts= new com.bank.model.Account();
         modelAccounts.setAccountID(account.getAccountID());
         modelAccounts.setCustomerID(account.getCustomerID());
-        modelAccounts.setAccountType(account.getAccountType());
         modelAccounts.setBalance(account.getBalance());
         modelAccounts.setCurrency(account.getCurrency());
         return modelAccounts;

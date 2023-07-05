@@ -15,7 +15,6 @@ public class Account {
     @GeneratedValue (strategy= GenerationType.AUTO)
     private int accountID;
     private int customerID;
-    private Enum<AccountType> accountType;
     private double balance;
     private String currency;
 
@@ -24,7 +23,6 @@ public class Account {
         return "Account{" +
                 "accountID=" + accountID +
                 ", customerID=" + customerID +
-                ", accountType=" + accountType +
                 ", balance=" + balance +
                 ", currency='" + currency + '\'' +
                 '}';
