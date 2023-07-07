@@ -1,15 +1,23 @@
 package com.bank.controller;
 
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import com.bank.model.Account;
+import com.bank.service.AccountService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 
 @RestController
+@RequestMapping("api/v1/account")
 public class AccountController {
-    @GetMapping("/account")
-    public String getAccount(@RequestParam(value = "accNumber") int accNumber) {
-        return "{" + "\"accountNumber\":" + accNumber + ",\"balance\":1000.00,\"accountType\":\"savings\"}";
+    @Autowired
+    AccountService accountService;
+
+    @GetMapping
+    public List<Account> getAccounts(){
+        return accountService.getAccounts();
     }
 }
