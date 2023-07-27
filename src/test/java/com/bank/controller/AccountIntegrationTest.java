@@ -41,11 +41,10 @@ public class AccountIntegrationTest {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(org.springframework.http.MediaType.APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity<>(headers);
-        ResponseEntity<List<Account>> response = rest.exchange(url + "/api/v1/account",
+        ResponseEntity<List<Account>> response = rest.exchange(url + "/api/v1/account/getaccounts",
                 HttpMethod.GET, entity, new ParameterizedTypeReference<List<Account>>(){});
         assertNotNull(response.getBody());
         //200 is the http status code for OK
         assertEquals(200, response.getStatusCodeValue());
     }
-
 }

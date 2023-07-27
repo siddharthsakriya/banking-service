@@ -39,7 +39,25 @@ class AccountControllerUnitTest {
         given(accountService.getAccounts()).willReturn(List.of(
                 new Account(0, 0, 292.0, "GBP"),
                 new Account(1, 1, 111.0, "GBP")));
-        ResultActions response = mockMvc.perform(get("/api/v1/account"));
+        ResultActions response = mockMvc.perform(get("/api/v1/account/getaccounts"));
+        assertEquals(response.andReturn().getResponse().getContentAsString(), expectedResult);
+    }
+
+    @Test
+    void addAccount() throws Exception {
+        List testList = new ArrayList<>();
+        Account testAccount = new Account(2, 2, 222.0, "GBP");
+        testList.add(new Account(0, 0, 292.0, "GBP"));
+        testList.add(new Account(1, 1, 111.0, "GBP"));
+        testList.add(testAccount);
+        Gson gson = new Gson();
+        String expectedResult = gson.toJson(testList);
+        accountService.addAccount(testAccount);
+        given(accountService.getAccounts()).willReturn(List.of(
+                new Account(0, 0, 292.0, "GBP"),
+                new Account(1, 1, 111.0, "GBP"),
+                testAccount));
+        ResultActions response = mockMvc.perform(get("/api/v1/account/getaccounts"));
         assertEquals(response.andReturn().getResponse().getContentAsString(), expectedResult);
     }
 }
