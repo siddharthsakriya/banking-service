@@ -1,12 +1,10 @@
 package com.bank.controller;
 
+import com.bank.converter.AccountConverter;
 import com.bank.model.Account;
 import com.bank.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,9 +22,9 @@ public class AccountController {
     }
 
     @RequestMapping("/addaccount")
-    @GetMapping
-    public void addAccount(@RequestBody Account account){
-        accountService.addAccount(account);
+    @PostMapping
+    public Account addAccount(@RequestBody Account account){
+        return accountService.addAccount(account);
     }
 
 }
