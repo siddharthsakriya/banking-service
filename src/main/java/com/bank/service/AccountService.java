@@ -15,4 +15,8 @@ public class AccountService {
     public List<Account> getAccounts(){
         return AccountConverter.convertToModel(accountRepository.findAll());
     }
+
+    public void addAccount(Account account){
+        accountRepository.save(AccountConverter.convertToEntity(account));
+    }
 }
