@@ -30,4 +30,5 @@ public class AccountController {
     public void deleteAccount(@PathVariable("id") int id){
         accountService.deleteAccount(id);
     }
+
 }

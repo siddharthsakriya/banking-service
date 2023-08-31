@@ -1,6 +1,6 @@
 package com.bank.controller;
-
 import com.bank.BankingServiceApplication;
+import com.bank.db.repository.AccountRepository;
 import com.bank.model.Account;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,17 +14,21 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.springframework.test.annotation.DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD;
 
 @SpringBootTest(classes = BankingServiceApplication.class,
 webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@DirtiesContext(classMode = BEFORE_EACH_TEST_METHOD)
 // random port used to avoid port conflicts
 public class AccountIntegrationTest {
+    @Autowired
+    AccountRepository accountRepository;
     @LocalServerPort
     private int port;
     @Autowired
@@ -67,13 +71,21 @@ public class AccountIntegrationTest {
         ResponseEntity<Integer> response = rest.exchange(url + "/api/v1/account/addaccount",
                 HttpMethod.POST, entity, new ParameterizedTypeReference<Integer>(){});
         Integer result = response.getBody();
-
+        assertEquals(2, result);
+        assertNotNull(result);
+        assertEquals(200, response.getStatusCodeValue());
+        accountRepository.deleteById(response.getBody());
+    }
+    @Test
+    public void testDeleteAccounts(){
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(org.springframework.http.MediaType.APPLICATION_JSON);
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        rest.exchange(url + "/api/v1/account/deleteaccount/1",
+                HttpMethod.DELETE, entity, new ParameterizedTypeReference<Account>(){});
         HttpEntity<String> entity2 = new HttpEntity<>(headers);
         ResponseEntity<List<Account>> response2 = rest.exchange(url + "/api/v1/account/getaccounts",
                 HttpMethod.GET, entity2, new ParameterizedTypeReference<List<Account>>(){});
-
-        assertEquals( 2,response2.getBody().size());
-        assertNotNull(result);
-        assertEquals(200, response.getStatusCodeValue());
+        assertEquals( 0,response2.getBody().size());
     }
 }
