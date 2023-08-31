@@ -37,10 +37,19 @@ public class CustomerIntegrationTest {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(org.springframework.http.MediaType.APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity<>(headers);
-        ResponseEntity<List<Customer>> response = rest.exchange(url + "/api/v1/customer",
+        ResponseEntity<List<Customer>> response = rest.exchange(url + "/api/v1/customer/getcustomers",
                 HttpMethod.GET, entity, new ParameterizedTypeReference<List<Customer>>(){});
         assertNotNull(response.getBody());
         assertEquals(200, response.getStatusCodeValue());
     }
-
+    @Test
+    public void testGetCustomerById(){
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(org.springframework.http.MediaType.APPLICATION_JSON);
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        ResponseEntity<Customer> response = rest.exchange(url + "/api/v1/customer/getcustomerbyid/1",
+                HttpMethod.GET, entity, new ParameterizedTypeReference<Customer>(){});
+        assertNotNull(response.getBody());
+        assertEquals(200, response.getStatusCodeValue());
+    }
 }
