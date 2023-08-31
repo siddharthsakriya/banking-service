@@ -74,7 +74,6 @@ public class AccountIntegrationTest {
         assertEquals(2, result);
         assertNotNull(result);
         assertEquals(200, response.getStatusCodeValue());
-        accountRepository.deleteById(response.getBody());
     }
     @Test
     public void testDeleteAccounts(){
