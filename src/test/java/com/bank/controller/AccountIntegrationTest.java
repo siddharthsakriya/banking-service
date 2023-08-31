@@ -88,4 +88,22 @@ public class AccountIntegrationTest {
                 HttpMethod.GET, entity2, new ParameterizedTypeReference<List<Account>>(){});
         assertEquals( 0,response2.getBody().size());
     }
+
+    @Test
+    public void testUpdateAccounts(){
+        Account account = new Account (1, 1, 222.0, "GBP");
+        Gson gson = new Gson();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(org.springframework.http.MediaType.APPLICATION_JSON);
+        HttpEntity<String> entity = new HttpEntity<>(gson.toJson(account), headers);
+        ResponseEntity<Integer> response = rest.exchange(url + "/api/v1/account/updateaccount",
+                HttpMethod.POST, entity, new ParameterizedTypeReference<Integer>(){});
+        ResponseEntity<List<Account>> response2 = rest.exchange(url + "/api/v1/account/getaccounts",
+                HttpMethod.GET, entity, new ParameterizedTypeReference<List<Account>>(){});
+        String result = response2.getBody().get(0).getCurrency();
+        assertNotNull(response2.getBody());
+        assertEquals(1, response2.getBody().size());
+        assertEquals(200, response.getStatusCodeValue());
+        assertEquals("GBP", result);
+    }
 }

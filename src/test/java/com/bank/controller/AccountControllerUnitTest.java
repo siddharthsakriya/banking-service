@@ -65,4 +65,20 @@ class AccountControllerUnitTest {
         String result = response.andReturn().getResponse().getContentAsString();
         assertEquals("2", result);
     }
+
+    @Test
+    void updateAccount() throws  Exception{
+        Account testAccount = new Account(2, 2, 222.0, "GBP");
+        Gson gson = new Gson();
+        ResultActions response = mockMvc.perform(post("/api/v1/account/updateaccount")
+                .contentType("application/json")
+                .content(gson.toJson(testAccount)));
+        assertEquals(response.andReturn().getResponse().getStatus(), 200);
+    }
+
+    @Test
+    void deleteAccount() throws Exception{
+        ResultActions response = mockMvc.perform(delete("/api/v1/account/deleteaccount/0"));
+        assertEquals(response.andReturn().getResponse().getStatus(), 200);
+    }
 }

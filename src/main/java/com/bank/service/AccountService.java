@@ -29,4 +29,7 @@ public class AccountService {
     public void deleteAccount(int id){
         accountRepository.deleteById(id);
     }
+    public void updateAccount(Account account){
+         accountRepository.save(AccountConverter.convertToEntity(account));
+    }
 }

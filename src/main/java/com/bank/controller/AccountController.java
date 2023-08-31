@@ -30,5 +30,8 @@ public class AccountController {
     public void deleteAccount(@PathVariable("id") int id){
         accountService.deleteAccount(id);
     }
-
+    @RequestMapping(method = RequestMethod.POST, value = "/updateaccount")
+    public  void  updateAccount(@RequestBody Account account){
+        accountService.updateAccount(account);
+    }
 }
